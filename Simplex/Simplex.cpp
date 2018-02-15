@@ -5,6 +5,7 @@
 #include <fstream>
 using namespace std;
 
+double eps = 0.000001;
 
 /* Creating N_k index array */
 vector<int> createNk(vector<double> x_k)
@@ -171,6 +172,13 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 {
 	while (true)
 	{
+		cout << "current min:";
+		double min = x_k[0] * C[0];
+		for (int i = 1; i < x_k.size(); i++)
+		{
+			min += x_k[i] * C[i];
+		}
+		cout << min << endl;
 		vector<int> N_k(N); /* Index array for elements > 0 */
 		vector<int> L_k(N); /* Index array for elements = 0 */
 		N_k = createNk(x_k); /* Creating N_k index array */
@@ -206,6 +214,7 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 		{
 			if (Dk[i] < 0)
 			{
+
 				jk = L_k[i];
 				break;
 			}
@@ -257,8 +266,8 @@ void readFile(void)
 {
 
 	/* TODO: READ FILE TO */
-	const int M = 3;
-	const int N = 8;
+	const int M = 4;
+	const int N = 15;
 
 
 
@@ -353,6 +362,7 @@ void readFile(void)
 	cout << "Matrix A_M_K" << endl;
 	printMatrix(A_M_K, N - M, M);
 	x_k = Simplex(A_M_K, b, cTK, x_k, N-M, M);
+
 	return;
 }
 
