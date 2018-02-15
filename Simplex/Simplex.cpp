@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "Simplex.h"
-#include "vvector.h"
 #include "MatrixWork.h"
+#include <fstream>
 using namespace std;
 
 
@@ -255,6 +255,8 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 void readFile(void)
 {
 	/* Open file */
+	ifstream inputFile;
+
 	/* TODO: READ FILE TO */
 	const int M = 3;
 	const int N = 8;
