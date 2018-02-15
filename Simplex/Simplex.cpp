@@ -212,7 +212,7 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 		int jk = 0; /* Catching jk from L_k */
 		for (int i = 0; i < L_k.size(); i++)
 		{
-			if (Dk[i] < 0)
+			if (Dk[i] < -eps)
 			{
 
 				jk = L_k[i];
