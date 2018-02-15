@@ -252,79 +252,69 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 }
 
 
+
 void readFile(void)
 {
-	/* Open file */
-	ifstream inputFile;
 
 	/* TODO: READ FILE TO */
 	const int M = 3;
 	const int N = 8;
-	vector<double> x_k(N);
-	x_k[0] = 0;
-	x_k[1] = 0;
-	x_k[2] = 0;
-	x_k[3] = 0;
-	x_k[4] = 0;
-	x_k[5] = 5; /* y1 */
-	x_k[6] = 7; /* y2 */
-	x_k[7] = 2; /* y3 */
+
+
+
+	//parseFile(inputFile, N, M);
+	vector<double> x_k(N, 0);
+
 	vector<double> b(M);
-	b[0] = 2;
-	b[1] = 3;
+
 	vector<double> cT(N);
-	cT[0] = 0;
-	cT[1] = 0;
-	cT[2] = 0;
-	cT[3] = 0;
-	cT[4] = 0;
-	cT[5] = 1;
-	cT[6] = 1;
-	cT[7] = 1;
 
 	double** A_M_N = new double*[M];
 	for (int i = 0; i < M; i++)
 	{
 		A_M_N[i] = new double[N];
 	}
-	A_M_N[0][0] = 2;
-	A_M_N[0][1] = 1;
-	A_M_N[0][2] = 1;
-	A_M_N[0][3] = 1;
-	A_M_N[0][4] = 3;
 
-	A_M_N[0][5] = 1;
-	A_M_N[0][6] = 0;
-	A_M_N[0][7] = 0;
+	/* Open file */
+	ifstream inputFile;
+	inputFile.open("InputDataHelper.txt");
+	while (!inputFile.eof())
+	{
+		/* CT[N] */
+		for (int i = 0; i < N; i++)
+		{
+			inputFile >> cT[i];
+		}
+		/* A[M][N] */
+		for (int i = 0; i < M; i++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				inputFile >> A_M_N[i][j];
+			}
+		}
+		/* b[M] */
+		for (int i = 0; i < M; i++)
+		{
+			inputFile >> b[i];
+		}
+	}
 
-
-
-	A_M_N[1][0] = 3;
-	A_M_N[1][1] = 0;
-	A_M_N[1][2] = 2;
-	A_M_N[1][3] = -1;
-	A_M_N[1][4] = 6;
-
-	A_M_N[1][5] = 0;
-	A_M_N[1][6] = 1;
-	A_M_N[1][7] = 0;
-
-	
-	
-
-	A_M_N[2][0] = 1;
-	A_M_N[2][1] = 0;
-	A_M_N[2][2] = -1;
-	A_M_N[2][3] = 2;
-	A_M_N[2][4] = 1;
-
-	A_M_N[2][5] = 0;
-	A_M_N[2][6] = 0;
-	A_M_N[2][7] = 1;
-
-	
+	int k = 0;
+	for (int i = N - M; i < N; i++)
+	{
+		x_k[i] = b[k];
+		k++;
+	}
+	inputFile.close();
+	cout << "Matrix A_M_N" << endl;
 	printMatrix(A_M_N, N, M);
 	x_k = Simplex(A_M_N, b, cT, x_k, N, M);
+
+
+
+
+
 	double** A_M_K = new double*[M];
 	for (int i = 0; i < M; i++)
 	{
@@ -332,38 +322,36 @@ void readFile(void)
 	}
 
 
-	A_M_K[0][0] = 2;
-	A_M_K[0][1] = 1;
-	A_M_K[0][2] = 1;
-	A_M_K[0][3] = 1;
-	A_M_K[0][4] = 3;
-
-
-
-	A_M_K[1][0] = 3;
-	A_M_K[1][1] = 0;
-	A_M_K[1][2] = 2;
-	A_M_K[1][3] = -1;
-	A_M_K[1][4] = 6;
-
-
-
-
-	A_M_K[2][0] = 1;
-	A_M_K[2][1] = 0;
-	A_M_K[2][2] = -1;
-	A_M_K[2][3] = 2;
-	A_M_K[2][4] = 1;
-
 	vector<double> cTK(N - M);
-	cTK[0] = 0;
-	cTK[1] = 0;
-	cTK[2] = -3;
-	cTK[3] = 2;
-	cTK[4] = 1;
 
 
 	x_k.resize(N - M);
+	ifstream inputFile1;
+	inputFile1.open("InputData.txt");
+	while (!inputFile1.eof())
+	{
+		/* CT[N] */
+		for (int i = 0; i < N - M; i++)
+		{
+			inputFile1 >> cTK[i];
+		}
+		/* A[M][N] */
+		for (int i = 0; i < M; i++)
+		{
+			for (int j = 0; j < N - M; j++)
+			{
+				inputFile1 >> A_M_K[i][j];
+			}
+		}
+		/* b[M] */
+		for (int i = 0; i < M; i++)
+		{
+			inputFile1 >> b[i];
+		}
+	}
+
+	cout << "Matrix A_M_K" << endl;
+	printMatrix(A_M_K, N - M, M);
 	x_k = Simplex(A_M_K, b, cTK, x_k, N-M, M);
 	return;
 }
