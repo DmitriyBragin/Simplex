@@ -183,7 +183,15 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 		vector<int> L_k(N); /* Index array for elements = 0 */
 		N_k = createNk(x_k); /* Creating N_k index array */
 		L_k = createLk(x_k); /* Creating L_k index array */
-
+		if (N_k.size() < M)
+		{
+			N_k.resize(M);
+			N_k[M - 1] = M;
+		}
+		if (L_k.size() > N - M)
+		{
+			L_k.resize(N - M);
+		}
 
 		vector<double> C_T_Lk(N, 0); /* Creating zero - vector */
 		C_T_Lk = createC_T_Lk(L_k, C); /* Initializing C_t[Lk] */
@@ -220,6 +228,22 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 			}
 			else if (i == L_k.size() - 1)
 			{
+				vector<double> tempOS(M);
+				tempOS = vector_dot_matrix(C_T_Nk, B, N_k.size(), M);
+				vector<double> tempOS1(N);
+				tempOS1 = vector_dot_matrix(tempOS, A, N, M);
+				vector<double> optimium(N);
+				for (int i = 0; i < N; i++)
+				{
+					optimium[i] = C[i] - tempOS1[i];
+				}
+				double res = 0;
+				for (int i = 0; i < N; i++)
+				{
+					res += optimium[i] * x_k[i]; /* Checking optimum conditions */
+				}
+
+
 				return x_k; /* OPTIMUS */
 			}
 		} /* jk caught */
@@ -362,6 +386,7 @@ void readFile(void)
 	cout << "Matrix A_M_K" << endl;
 	printMatrix(A_M_K, N - M, M);
 	x_k = Simplex(A_M_K, b, cTK, x_k, N-M, M);
+
 
 	return;
 }
