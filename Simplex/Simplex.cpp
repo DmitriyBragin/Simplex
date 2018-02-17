@@ -208,6 +208,8 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 		{
 			B[i] = new double[N_k.size()];
 		}
+
+
 		inverse(A_M_Nk, B, N_k.size()); /* Inverting matrix A[M][Nk] */
 
 
@@ -228,14 +230,14 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 			}
 			else if (i == L_k.size() - 1)
 			{
-				vector<double> tempOS(M);
-				tempOS = vector_dot_matrix(C_T_Nk, B, N_k.size(), M);
-				vector<double> tempOS1(N);
-				tempOS1 = vector_dot_matrix(tempOS, A, N, M);
+				vector<double> tempVec(M);
+				tempVec = vector_dot_matrix(C_T_Nk, B, N_k.size(), M);
+				vector<double> tempVec2(N);
+				tempVec2 = vector_dot_matrix(tempVec, A, N, M);
 				vector<double> optimium(N);
 				for (int i = 0; i < N; i++)
 				{
-					optimium[i] = C[i] - tempOS1[i];
+					optimium[i] = C[i] - tempVec2[i];
 				}
 				double res = 0;
 				for (int i = 0; i < N; i++)
