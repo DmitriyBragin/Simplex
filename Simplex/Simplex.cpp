@@ -303,7 +303,7 @@ void readFile(void)
 
 	/* Open file */
 	ifstream inputFile;
-	inputFile.open("InputDataHelper3.txt");
+	inputFile.open("InputDataHelper4.txt");
 	while (!inputFile.eof())
 	{
 		/* CT[N] */
@@ -353,7 +353,7 @@ void readFile(void)
 
 	x_k.resize(N - M);
 	ifstream inputFile1;
-	inputFile1.open("InputData3.txt");
+	inputFile1.open("InputData4.txt");
 	while (!inputFile1.eof())
 	{
 		/* CT[N] */
