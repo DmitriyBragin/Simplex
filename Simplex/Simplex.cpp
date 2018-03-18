@@ -283,8 +283,8 @@ void readFile(void)
 {
 
 	/* TODO: READ FILE TO */
-	const int M = 4;
-	const int N = 15;
+	const int M = 9;
+	const int N = 29;
 
 
 
@@ -303,7 +303,7 @@ void readFile(void)
 
 	/* Open file */
 	ifstream inputFile;
-	inputFile.open("InputDataHelper4.txt");
+	inputFile.open("InputDataHelperT.txt");
 	while (!inputFile.eof())
 	{
 		/* CT[N] */
@@ -353,7 +353,7 @@ void readFile(void)
 
 	x_k.resize(N - M);
 	ifstream inputFile1;
-	inputFile1.open("InputData4.txt");
+	inputFile1.open("InputDataT.txt");
 	while (!inputFile1.eof())
 	{
 		/* CT[N] */
