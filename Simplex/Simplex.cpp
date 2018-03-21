@@ -205,7 +205,7 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 
 
 
-
+		printMatrix(B, N_k.size(), M);
 		vector<double> Dk(L_k.size()); /* Creating Dk vector */
 		Dk = createDK(C_T_Nk, C_T_Lk, B, A_M_Lk, N_k, L_k, M);	/* Calculating Dk vector */
 
@@ -236,7 +236,13 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 					res += optimium[i] * x_k[i]; /* Checking optimum conditions */
 				}
 
-
+				vector<double> solutionOtherTask(M);
+				solutionOtherTask = vector_dot_matrix(C_T_Nk, B, N_k.size(), M);
+				double difference = 0;
+				for (i = 0; i < N; i++)
+				{
+					difference += 0.1 * x_k[i];
+				}
 				return x_k; /* OPTIMUS */
 			}
 		} /* jk caught */
@@ -266,12 +272,21 @@ vector<double> Simplex(double **A, vector<double> b, vector<double> C, vector<do
 				}
 			}
 		} /* Theta found */
-
+		vector<double> thetaUk(N);
+		for (int i = 0; i < N; i++)
+		{
+			thetaUk[i] = Theta * Uk[i];
+		}
 		/* Multiplying vector to scalar */
 		for (int i = 0; i < N; i++)
 		{
 			x_k[i] = x_k[i] - Theta * Uk[i];
 		}
+		vector<double> allowableVector(N);
+		vector<double> curiousVector(N);
+		allowableVector = matrix_dot_vector(A, x_k, N, M);
+		curiousVector = matrix_dot_vector(A, thetaUk, N, M);
+
 		printMatrix(A_M_Nk, N_k.size(), M);
 	}
 	return x_k;
@@ -283,8 +298,8 @@ void readFile(void)
 {
 
 	/* TODO: READ FILE TO */
-	const int M = 9;
-	const int N = 29;
+	const int M = 4;
+	const int N = 15;
 
 
 
@@ -303,7 +318,7 @@ void readFile(void)
 
 	/* Open file */
 	ifstream inputFile;
-	inputFile.open("InputDataHelperT.txt");
+	inputFile.open("InputDataHelper.txt");
 	while (!inputFile.eof())
 	{
 		/* CT[N] */
@@ -353,7 +368,7 @@ void readFile(void)
 
 	x_k.resize(N - M);
 	ifstream inputFile1;
-	inputFile1.open("InputDataT.txt");
+	inputFile1.open("InputData.txt");
 	while (!inputFile1.eof())
 	{
 		/* CT[N] */
