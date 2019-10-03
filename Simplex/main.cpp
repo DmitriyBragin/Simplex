@@ -4,6 +4,7 @@
 #include "Simplex.h"
 using namespace std;
 
+
 int main(void)
 {
 	/* get input data */
